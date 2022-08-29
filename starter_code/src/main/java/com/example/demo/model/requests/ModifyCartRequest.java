@@ -1,7 +1,9 @@
 package com.example.demo.model.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
+@Builder
 public class ModifyCartRequest {
 	
 	@JsonProperty
