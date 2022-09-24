@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import com.example.demo.model.persistence.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,8 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 @RequiredArgsConstructor
 public final class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
+
     private final AuthenticationManager authenticationManager;
 
     @Override
@@ -35,6 +39,7 @@ public final class JWTAuthenticationFilter extends UsernamePasswordAuthenticatio
             return authenticationManager.authenticate(token);
         }
         catch (IOException ex) {
+            LOGGER.error("Authentication error", ex);
             throw new RuntimeException(ex);
         }
     }
